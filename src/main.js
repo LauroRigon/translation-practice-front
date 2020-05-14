@@ -4,11 +4,20 @@ import Vuelidate from "vuelidate/src";
 import "nprogress/nprogress.css";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import moment from "moment";
+import BootstrapVueIcons from "bootstrap-vue/dist/bootstrap-vue-icons.esm";
 
+import "./config/autoImport.js";
 import router from "./router"
 
+Vue.use(BootstrapVueIcons);
 Vue.use(Vuelidate);
 Vue.config.productionTip = false;
+
+Vue.filter('date', function (value) {
+  if (!value) return '';
+  return moment(value).format('DD/MM/YY');
+});
 
 new Vue({
   router,

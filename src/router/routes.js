@@ -23,6 +23,7 @@ const routes = [
     path: '/',
     name: 'root',
     component: () => import(/* webpackChunkName: "root" */ "@/views/Root.vue"),
+    redirect: { name: 'translation-list' },
     children: [
       {
         path: 'translation/',

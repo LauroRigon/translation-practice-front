@@ -8,4 +8,12 @@ export default {
   getTranslation(id) {
     return apiClient.get(`translation/${id}`);
   },
+
+  createTranslation(data) {
+    return apiClient.post(`translation`, data);
+  },
+
+  updateTranslation(data) {
+    return apiClient.patch(`translation/${data['_id']}`, data);
+  }
 }

@@ -1,6 +1,8 @@
 <template>
-  <div class="container-fluid">
-    <router-view></router-view>
+  <div class="main container-fluid">
+    <div class="main-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -10,6 +12,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+  body {
+    background-color: #0E0E10;
+    font-family: "Helvetica", sans-serif !important;
+    color: rgb(211, 211, 211);
+  }
 </style>
