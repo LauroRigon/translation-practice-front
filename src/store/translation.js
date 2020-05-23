@@ -35,8 +35,7 @@ export const methods = {
   updateTranslation(data) {
     return TranslationService.updateTranslation(data)
       .then(response => {
-        this.addNotification({ type: 'success', title: 'Opa', message: 'Tudo certo' });
-        this.fetchTranslations();
+
       })
       .catch(error => {
         this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });

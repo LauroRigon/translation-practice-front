@@ -53,7 +53,7 @@ export default {
       store.createTranslation(data)
     },
 
-    handleUpdate(data, translation) {
+    handleUpdate(data) {
       store.updateTranslation(data)
     }
   },
