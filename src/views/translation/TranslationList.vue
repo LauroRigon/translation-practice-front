@@ -5,12 +5,12 @@
     </BaseHeader>
 
     <div class="d-flex align-items-baseline flex-wrap">
-      <TranslationItem v-for="translation in sharedState.translations" :translation="translation">
-        <TranslationCreate @submit="handleUpdate" :translation="translation" slot="edit-form"/>
-      </TranslationItem>
+      <template v-for="translation in sharedState.translations">
+        <TranslationItem :translation="translation" :key="translation._id"/>
+      </template>
 
       <div class="translation-item d-flex justify-content-center align-content-center position-relative" @click="privateState.showCreate = true">
-        <TranslationCreate v-if="privateState.showCreate" @submit="handleSubmit"/>
+        <TranslationForm v-if="privateState.showCreate" @submit="handleSubmit"/>
         <div class="pt-2" v-else>
           <BIcon icon="plus-circle" scale="3"/>
         </div>
@@ -23,7 +23,7 @@
 import store from "@/store";
 import BaseHeader from "@/components/common/BaseHeader";
 import TranslationItem from "@/components/TranslationItem";
-import TranslationCreate from "@/components/TranslationCreate";
+import TranslationForm from "@/components/TranslationForm";
 
 function fetchTranslations(next) {
   store.fetchTranslations()
@@ -34,7 +34,7 @@ function fetchTranslations(next) {
 
 export default {
   name: "TranslationList",
-  components: {TranslationCreate, TranslationItem, BaseHeader},
+  components: {TranslationForm, TranslationItem, BaseHeader},
   data() {
     return {
       sharedState: store.state,
@@ -52,10 +52,6 @@ export default {
     handleSubmit(data) {
       store.createTranslation(data)
     },
-
-    handleUpdate(data) {
-      store.updateTranslation(data)
-    }
   },
 }
 </script>

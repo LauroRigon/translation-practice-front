@@ -1,17 +1,18 @@
 <template>
   <div class="translation-item">
-    <BIcon icon="plus-circle" scale="1" style="position: absolute; top: 5px; right:5px; " @click.self="showForm = !showForm"/>
-    <router-link v-if="!showForm" tag="div" :to="{ name: 'translation-show', params: { id: translation._id }}">
+    <BIcon class="translation-item__icon" v-if="!showEditForm" icon="pencil-square" scale="1" @click="showEditForm = !showEditForm"/>
+    <BIcon class="translation-item__icon" v-else icon="x" scale="1" @click="showEditForm = !showEditForm"/>
+    <router-link v-if="!showEditForm" tag="div" :to="{ name: 'translation-show', params: { id: translation._id }}">
       <div class="translation-item__name">
         <strong>{{ translation.name}}</strong>
       </div>
 
       <div class="translation-item__lang d-flex justify-content-between">
           <span>
-            <strong>De:</strong> {{ translation.fromLang }}
+            <strong>De:</strong> {{ LANG_LIST[translation.fromLang] }}
           </span>
           <span>
-            <strong>Para:</strong> {{ translation.toLang }}
+            <strong>Para:</strong> {{ LANG_LIST[translation.toLang] }}
           </span>
       </div>
 
@@ -19,16 +20,18 @@
         {{ translation.created | date }}
       </div>
     </router-link>
-    <slot v-else name="edit-form">
-
-    </slot>
+    <TranslationForm v-else @submit="handleUpdate" :id="this.translation._id" :populate-with="translation"/>
   </div>
 </template>
 
 <script>
+import TranslationForm from "@/components/TranslationForm";
+import store from "@/store";
+import { LANG_LIST } from "@/consts/translation";
+
 export default {
   name: "TranslationItem",
-
+  components: {TranslationForm},
   props: {
     translation: {
       type: Object,
@@ -38,8 +41,17 @@ export default {
 
   data() {
     return {
-      showForm: false,
+      showEditForm: false,
+      LANG_LIST,
     }
+  },
+  methods: {
+    handleUpdate(data) {
+      store.updateTranslation(data)
+      .then(() => {
+        this.showEditForm = false;
+      })
+    },
   },
 }
 </script>
@@ -47,7 +59,7 @@ export default {
 <style>
 .translation-item {
   position: relative;
-  flex-basis: 280px;
+  flex-basis: 270px;
   flex-shrink: 0;
   margin: 10px 20px;
   padding: 10px 10px 20px;
@@ -75,5 +87,15 @@ export default {
   font-size: 13px;
   font-weight: 100;
 }
-
+.translation-item__icon {
+  position: absolute;
+  top: 5px;
+  right:5px;
+  width: 20px;
+  height: 20px;
+}
+.translation-item__icon:hover {
+  color: #a970ff;
+  transform: scale(1.2);
+}
 </style>

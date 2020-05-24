@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="onSubmit">
     <BaseInput placeholder="Nome" v-model="form.name" block/>
     <BaseSelect placeholder="De" v-model="form.fromLang" :options="langOptions" block/>
     <BaseSelect placeholder="De" v-model="form.toLang" :options="langOptions" block/>
@@ -16,10 +16,13 @@
 </template>
 
 <script>
-import { BButton } from "bootstrap-vue";
-import { BOverlay } from "bootstrap-vue";
+import {BButton} from "bootstrap-vue";
+import {BOverlay} from "bootstrap-vue";
 
 import BaseSelect from "@/components/common/BaseSelect";
+
+import { LANG_LIST } from "@/consts/translation";
+
 export default {
   name: "TranslationCreate",
   components: {BaseSelect, BButton, BOverlay},
@@ -28,35 +31,47 @@ export default {
       type: Boolean,
       default: false
     },
-    translation: {
+    id: {
+      type: [Number, String],
+    },
+    populateWith: {
       type: Object,
       default: () => ({
-        name: '',
-        fromLang: 0,
-        toLang: 0,
-      }),
+        empty: true
+      })
+    },
+    findEnity: {
+      type: Function,
+    }
+  },
+  created() {
+    if (!this.populateWith.empty) {
+      this.form = this.populateWith;
+    } else if (this.id && this.findEnity) {
+      this.form = this.findEnity(this.id);
     }
   },
   data() {
     return {
-      form: this.translation,
-      langOptions: [
-        { id: 0, text: 'Selecione'},
-        { id: 1, text: 'PT-BR'},
-        { id: 2, text: 'EN'},
-      ]
+      langOptions: {
+        0: 'Selecione',
+        ...LANG_LIST
+      },
+      form: {
+        name: '',
+        fromLang: 0,
+        toLang: 0,
+      }
     }
   },
-
-  methods: {
-    handleSubmit() {
-      this.$emit('submit', this.form);
-    }
-  },
-
   computed: {
     btnLabel() {
-      return !this.form._id ? 'Criar' : 'Atualizar';
+      return !this.id ? 'Criar' : 'Atualizar';
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$emit('submit', this.form);
     }
   },
 }
