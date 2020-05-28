@@ -15,5 +15,9 @@ export default {
 
   updateTranslation(data) {
     return apiClient.patch(`translation/${data['_id']}`, data);
+  },
+
+  removeTranslation(id) {
+    return apiClient.delete(`translation/${id}`);
   }
 }

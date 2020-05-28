@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import Vuelidate from "vuelidate/src";
 import "nprogress/nprogress.css";
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './assets/style/index.scss';
+
 import moment from "moment";
 import BootstrapVueIcons from "bootstrap-vue/dist/bootstrap-vue-icons.esm";
 

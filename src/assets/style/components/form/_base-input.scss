@@ -1,0 +1,26 @@
+.form-group .form-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--purple);
+  color: #d3d3d3;
+  z-index: 10;
+}
+
+.form-input:focus {
+  outline: none;
+  border-bottom-width: 2px;
+}
+
+.form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--purple);
+  color: #d3d3d3;
+  z-index: 10;
+}
+
+.form-control:focus {
+  background-color: black;
+  border: 2px var(--purple);
+  outline: 0;
+}

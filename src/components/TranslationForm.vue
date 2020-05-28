@@ -46,9 +46,7 @@ export default {
   },
   created() {
     if (!this.populateWith.empty) {
-      this.form = this.populateWith;
-    } else if (this.id && this.findEnity) {
-      this.form = this.findEnity(this.id);
+      this.form = { ...this.populateWith };
     }
   },
   data() {
@@ -76,7 +74,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

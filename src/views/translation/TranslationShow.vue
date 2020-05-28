@@ -31,8 +31,7 @@ import {
   History,
 } from 'tiptap-extensions';
 
-import { Splitpanes, Pane } from 'splitpanes'
-import 'splitpanes/dist/splitpanes.css'
+import { Splitpanes, Pane } from 'splitpanes';
 
 import store from "@/store";
 
@@ -101,32 +100,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.splitpanes {
-  color: white;
-}
-.splitpanes__pane {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.splitpanes__splitter {
-  cursor: ns-resize;
-}
-
-.splitpanes--vertical > .splitpanes__splitter {
-  min-width: 10px;
-  background-color: #333642;
-}
-.splitpanes--horizontal > .splitpanes__splitter {
-  min-height: 10px;
-  background-color: #333642;
-}
-
-.ProseMirror {
-  height: 100%;
-}
-
-</style>

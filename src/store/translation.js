@@ -35,7 +35,17 @@ export const methods = {
   updateTranslation(data) {
     return TranslationService.updateTranslation(data)
       .then(response => {
+        this.fetchTranslations();
+      })
+      .catch(error => {
+        this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });
+      })
+  },
 
+  removeTranslation(id) {
+    return TranslationService.removeTranslation(id)
+      .then(response => {
+        this.fetchTranslations();
       })
       .catch(error => {
         this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });

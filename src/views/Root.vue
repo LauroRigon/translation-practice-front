@@ -11,11 +11,3 @@ export default {
   name: "App"
 }
 </script>
-
-<style>
-  body {
-    background-color: #1D1E22;
-    font-family: "Helvetica", sans-serif !important;
-    color: rgb(211, 211, 211);
-  }
-</style>

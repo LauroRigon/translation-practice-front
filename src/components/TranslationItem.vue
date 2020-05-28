@@ -20,7 +20,12 @@
         {{ translation.created | date }}
       </div>
     </router-link>
-    <TranslationForm v-else @submit="handleUpdate" :id="this.translation._id" :populate-with="translation"/>
+    <div v-else>
+      <TranslationForm @submit="handleUpdate" :id="translation._id" :populate-with="translation"/>
+      <BButton variant="danger" block type="submit" @click="handleRemove">
+        Remover
+      </BButton>
+    </div>
   </div>
 </template>
 
@@ -28,10 +33,11 @@
 import TranslationForm from "@/components/TranslationForm";
 import store from "@/store";
 import { LANG_LIST } from "@/consts/translation";
+import { BButton } from "bootstrap-vue";
 
 export default {
   name: "TranslationItem",
-  components: {TranslationForm},
+  components: {TranslationForm, BButton},
   props: {
     translation: {
       type: Object,
@@ -52,50 +58,11 @@ export default {
         this.showEditForm = false;
       })
     },
+    handleRemove() {
+      if (!window.confirm('Certeza?')) return;
+
+      store.removeTranslation(this.translation._id);
+    },
   },
 }
 </script>
-
-<style>
-.translation-item {
-  position: relative;
-  flex-basis: 270px;
-  flex-shrink: 0;
-  margin: 10px 20px;
-  padding: 10px 10px 20px;
-  border: 1px solid #484848e0;
-  background-color: #383838;
-  transition: transform .1s;
-}
-
-.translation-item:hover, .translation-item:focus {
-  cursor: pointer;
-  box-shadow: -5px 5px #a970ff;
-  transform: translate(5px, -5px);
-}
-
-.translation-item__name {
-  font-size: 20px;
-}
-
-.translation-item__meta {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 1px 3px;
-  font-size: 13px;
-  font-weight: 100;
-}
-.translation-item__icon {
-  position: absolute;
-  top: 5px;
-  right:5px;
-  width: 20px;
-  height: 20px;
-}
-.translation-item__icon:hover {
-  color: #a970ff;
-  transform: scale(1.2);
-}
-</style>

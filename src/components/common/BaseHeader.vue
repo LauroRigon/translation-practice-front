@@ -31,9 +31,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-  .header-highlight {
-    color: #a970ff;
-  }
-</style>

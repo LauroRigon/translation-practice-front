@@ -93,7 +93,6 @@ export default {
         confirm_password: { required, sameAsPassword: sameAs('password') },
       }
     }
-
   },
 
   data() {
@@ -117,7 +116,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

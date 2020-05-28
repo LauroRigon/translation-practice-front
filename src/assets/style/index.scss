@@ -1,0 +1,23 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+@import 'components/_title-header';
+@import 'components/_splitpanes';
+@import 'components/form/_text-redactor';
+@import 'components/form/_base-input';
+@import 'components/_translation-item';
+
+:root {
+  --purple: #a970ff;
+  --dark: #1e2125;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark);
+  font-family: "Helvetica", sans-serif !important;
+  color: var(--light);
+}

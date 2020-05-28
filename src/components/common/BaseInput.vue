@@ -13,19 +13,3 @@ export default {
   mixins: [formFieldMixin],
 };
 </script>
-
-<style>
-  .form-group .form-input {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #a970ff;
-    color: #d3d3d3;
-
-    z-index: 10;
-  }
-
-  .form-input:focus {
-    outline: none;
-    border-bottom-width: 2px;
-  }
-</style>
