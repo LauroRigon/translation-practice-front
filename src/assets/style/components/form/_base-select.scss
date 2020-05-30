@@ -1,4 +1,4 @@
-.form-input {
+.custom-select {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid var(--purple);
@@ -6,7 +6,7 @@
   z-index: 10;
 }
 
-.form-input:focus {
+.custom-select:focus {
   outline: none;
   border-bottom-width: 2px;
 }

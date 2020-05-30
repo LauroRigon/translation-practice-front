@@ -2,15 +2,15 @@
   <div class="translation-view">
     <splitpanes horizontal="horizontal" style="height: 100vh;">
       <pane>
-        <editor-content :editor="originalTextEditor" style="width: 100%; height: 100%;"/>
+        <div v-html="translation.originalText"></div>
       </pane>
       <pane>
         <splitpanes vertical="vertical">
           <pane>
-            <editor-content :editor="translationTextEditor" style="width: 100%; height: 100%;"/>
+            <Redactor class="p-1 w-100 h-100" @update="handleTranslationUpdate" :populate-with="translation.translationText"/>
           </pane>
           <pane>
-            <editor-content :editor="translationTextInvertedEditor" style="width: 100%; height: 100%;"/>
+            <Redactor class="p-1 w-100 h-100" @update="handleTranslationInvertedUpdate" :populate-with="translation.translationInvertedText"/>
           </pane>
         </splitpanes>
       </pane>
@@ -19,36 +19,16 @@
 </template>
 
 <script>
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
-import {
-  Blockquote,
-  Heading,
-  Bold,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History,
-} from 'tiptap-extensions';
-
 import { Splitpanes, Pane } from 'splitpanes';
 
 import store from "@/store";
+import Redactor from "@/components/Redactor";
 
-const EDITOR_EXTENSIONS = [
-  new Blockquote(),
-  new Heading({ levels: [1, 2, 3] }),
-  new Bold(),
-  new Italic(),
-  new Link(),
-  new Strike(),
-  new Underline(),
-  new History(),
-];
+import debounce from 'lodash/debounce'
 
 export default {
   name: "TranslationShow",
-  components: { Splitpanes, Pane, EditorContent, EditorMenuBar },
+  components: {Redactor, Splitpanes, Pane},
   props: {
     translation: {
       type: Object,
@@ -56,47 +36,29 @@ export default {
     },
   },
   data() {
-    return {
-      originalTextEditor: null,
-      translationTextEditor: null,
-      translationTextInvertedEditor: null,
-    }
+    return {}
   },
-  mounted() {
-    this.originalTextEditor = new Editor({
-      extensions: EDITOR_EXTENSIONS,
-      content: this.translation.originalText,
-      onBlur: this.handleOriginalBlur,
-    });
-
-    this.translationTextEditor = new Editor({
-      extensions: EDITOR_EXTENSIONS,
-      content: this.translation.translationText,
-      onBlur: this.handleTranslationBlur,
-    });
-
-    this.translationTextInvertedEditor = new Editor({
-      extensions: EDITOR_EXTENSIONS,
-      content: this.translation.translationInvertedText,
-      onBlur: this.handleTranslationInvertedBlur,
-    });
-  },
-  beforeDestroy() {
-    this.originalTextEditor.destroy()
+  created() {
+    this.handleTranslationUpdate = debounce(this.handleTranslationUpdate, 3000);
   },
   methods: {
-    handleOriginalBlur() {
-      const text = this.originalTextEditor.getHTML();
-      store.updateTranslation({ _id: this.translation._id, originalText: text })
-    },
-    handleTranslationBlur() {
-      const text = this.translationTextEditor.getHTML();
+    handleTranslationUpdate(Editor) {
+      const text = Editor.getHTML();
       store.updateTranslation({ _id: this.translation._id, translationText: text })
     },
-    handleTranslationInvertedBlur() {
-      const text = this.translationTextInvertedEditor.getHTML();
+    handleTranslationInvertedUpdate(Editor) {
+      const text = Editor.getHTML();
       store.updateTranslation({ _id: this.translation._id, translationInvertedText: text })
     }
   }
 }
 </script>
+
+<style scoped>
+.ProseMirror {
+  height: 100vh;
+}
+.splitpanes__pane {
+  overflow-y: auto;
+}
+</style>

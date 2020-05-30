@@ -3,8 +3,11 @@
 
 @import 'components/_title-header';
 @import 'components/_splitpanes';
-@import 'components/form/_text-redactor';
+@import 'components/form/_redactor';
+
 @import 'components/form/_base-input';
+@import 'components/form/_base-select';
+
 @import 'components/_translation-item';
 
 :root {

@@ -1,4 +1,5 @@
 import TranslationService from "@/services/TranslationService";
+import router from "@/router";
 
 export const state = {
   translations: [],
@@ -25,7 +26,7 @@ export const methods = {
     return TranslationService.createTranslation(data)
       .then(response => {
         this.addNotification({ type: 'success', title: 'Opa', message: 'Tudo certo' });
-        this.fetchTranslations();
+        router.push({ name: 'translation-list'});
       })
       .catch(error => {
         this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });
@@ -35,7 +36,7 @@ export const methods = {
   updateTranslation(data) {
     return TranslationService.updateTranslation(data)
       .then(response => {
-        this.fetchTranslations();
+        router.push({ name: 'translation-list'});
       })
       .catch(error => {
         this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });

@@ -31,6 +31,28 @@ const routes = [
         component: () => import(/* webpackChunkName: "translation-list" */ "@/views/translation/TranslationList.vue"),
       },
       {
+        path: 'translation/create',
+        name: 'translation-create',
+        component: () => import(/* webpackChunkName: "translation-form" */ "@/views/translation/TranslationForm.vue"),
+      },
+      {
+        path: 'translation/edit/:id',
+        name: 'translation-edit',
+        props: true,
+        component: () => import(/* webpackChunkName: "translation-form" */ "@/views/translation/TranslationForm.vue"),
+        beforeEnter: (routeTo, routeFrom, next) => {
+          let translationId = routeTo.params.id;
+          store.fetchTranslation(translationId)
+            .then(response => {
+              routeTo.params.translation = response.data;
+              next();
+            })
+            .catch(() => {
+              store.addNotification({ type: 'danger', title: 'Opss', message: 'Deu ruim ao recuperar a Translation' });
+            });
+        }
+      },
+      {
         path: 'translation/:id',
         name: 'translation-show',
         props: true,

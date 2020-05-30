@@ -9,12 +9,11 @@
         <TranslationItem :translation="translation" :key="translation._id"/>
       </template>
 
-      <div class="translation-item d-flex justify-content-center align-content-center position-relative" @click="privateState.showCreate = true">
-        <TranslationForm v-if="privateState.showCreate" @submit="handleSubmit"/>
-        <div class="pt-2" v-else>
+      <router-link tag="div" :to="{ name: 'translation-create' }" class="translation-item d-flex justify-content-center align-content-center position-relative">
+        <div class="pt-2">
           <BIcon icon="plus-circle" scale="3"/>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -23,7 +22,6 @@
 import store from "@/store";
 import BaseHeader from "@/components/common/BaseHeader";
 import TranslationItem from "@/components/TranslationItem";
-import TranslationForm from "@/components/TranslationForm";
 
 function fetchTranslations(next) {
   store.fetchTranslations()
@@ -34,13 +32,11 @@ function fetchTranslations(next) {
 
 export default {
   name: "TranslationList",
-  components: {TranslationForm, TranslationItem, BaseHeader},
+  components: {TranslationItem, BaseHeader},
   data() {
     return {
       sharedState: store.state,
-      privateState: {
-        showCreate: false,
-      }
+      privateState: {}
     }
   },
 
