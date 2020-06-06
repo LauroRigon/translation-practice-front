@@ -1,8 +1,24 @@
 <template>
   <div class="translation-view">
+    <div class="toolbox-container">
+      <app-toolbox>
+        <toolbox-tool icon="file-audio">
+          
+          <toolbox-tool icon="play">
+
+          </toolbox-tool>
+          <toolbox-tool icon="volume-up">
+
+          </toolbox-tool>
+
+        </toolbox-tool>
+      </app-toolbox>
+    </div>
+
+
     <splitpanes horizontal="horizontal" style="height: 100vh;">
-      <pane>
-        <div v-html="translation.originalText"></div>
+      <pane >
+        <div v-html="translation.originalText" class="w-100 h-100" style="padding: 20px; word-wrap: break-word;"></div>
       </pane>
       <pane>
         <splitpanes vertical="vertical">
@@ -25,10 +41,12 @@ import store from "@/store";
 import Redactor from "@/components/Redactor";
 
 import debounce from 'lodash/debounce'
+import AppToolbox from "@/components/toolbox/AppToolbox";
+import ToolboxTool from "@/components/toolbox/ToolboxTool";
 
 export default {
   name: "TranslationShow",
-  components: {Redactor, Splitpanes, Pane},
+  components: {ToolboxTool, AppToolbox, Redactor, Splitpanes, Pane},
   props: {
     translation: {
       type: Object,
@@ -44,11 +62,11 @@ export default {
   methods: {
     handleTranslationUpdate(Editor) {
       const text = Editor.getHTML();
-      store.updateTranslation({ _id: this.translation._id, translationText: text })
+      store.updateTranslation(this.translation._id, { translationText: text });
     },
     handleTranslationInvertedUpdate(Editor) {
       const text = Editor.getHTML();
-      store.updateTranslation({ _id: this.translation._id, translationInvertedText: text })
+      store.updateTranslation(this.translation._id, { translationInvertedText: text });
     }
   }
 }
@@ -60,5 +78,11 @@ export default {
 }
 .splitpanes__pane {
   overflow-y: auto;
+}
+
+.toolbox-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 </style>

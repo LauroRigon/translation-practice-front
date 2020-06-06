@@ -21,3 +21,13 @@
   min-height: 10px;
   background-color: #333642;
 }
+
+.splitpanes__pane::-webkit-scrollbar {
+  width: 0.8rem;
+}
+.splitpanes__pane::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+.splitpanes__pane::-webkit-scrollbar-thumb {
+  background: var(--purple);
+}

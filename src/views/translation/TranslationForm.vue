@@ -3,8 +3,9 @@
     <BFormInput placeholder="Nome" v-model="form.name" block/>
     <BFormSelect placeholder="De" v-model="form.fromLang" :options="langOptions" class="mt-2"/>
     <BFormSelect placeholder="De" v-model="form.toLang" :options="langOptions" class="mt-2"/>
+    <BFormFile @change="handleChangeFile" placeholder="Choose a audio file..." drop-placeholder="Drop here..."/>
 
-    <Redactor class="mt-2" @update="handleRedactorInput" :populate-with="translation.originalText"/>
+    <Redactor class="mt-2" @update="handleRedactorInput" :populate-with="translation && translation.originalText"/>
 
     <BOverlay :show="loading"
               rounded
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import {BButton, BFormInput, BFormSelect} from "bootstrap-vue";
+import {BButton, BFormInput, BFormSelect, BFormFile} from "bootstrap-vue";
 import {BOverlay} from "bootstrap-vue";
 
 import BaseSelect from "@/components/common/BaseSelect";
@@ -26,10 +27,11 @@ import Redactor from "@/components/Redactor";
 
 import { LANG_LIST } from "@/consts/translation";
 import store from "@/store";
+import router from "@/router";
 
 export default {
   name: "TranslationForm",
-  components: {Redactor, BaseSelect, BButton, BOverlay, BFormInput, BFormSelect},
+  components: {Redactor, BaseSelect, BButton, BOverlay, BFormInput, BFormSelect, BFormFile},
   props: {
     translation: {
       type: Object,
@@ -55,6 +57,7 @@ export default {
         fromLang: 0,
         toLang: 0,
         originalText: '',
+        audioFile: null,
       }
     }
   },
@@ -65,14 +68,23 @@ export default {
   },
   methods: {
     onSubmit() {
+      const formData = new FormData();
+      Object.keys(this.form).forEach((key) => formData.append(key, this.form[key]));
+
       if (!this.translation) {
-        store.createTranslation(this.form);
+        store.createTranslation(formData);
       } else {
-        store.updateTranslation(this.form);
+        store.updateTranslation(this.translation._id, formData)
+        .then(() => {
+          router.push({ name: 'translation-list'});
+        });
       }
     },
     handleRedactorInput(Editor) {
       this.$set(this.form, 'originalText', Editor.getHTML());
+    },
+    handleChangeFile(e) {
+      this.form.audioFile = e.target.files[0];
     }
   },
 }

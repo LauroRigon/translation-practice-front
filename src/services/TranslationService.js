@@ -13,8 +13,8 @@ export default {
     return apiClient.post(`translation`, data);
   },
 
-  updateTranslation(data) {
-    return apiClient.patch(`translation/${data['_id']}`, data);
+  updateTranslation(id, data) {
+    return apiClient.patch(`translation/${id}`, data);
   },
 
   removeTranslation(id) {

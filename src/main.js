@@ -7,6 +7,17 @@ import './assets/style/index.scss';
 import moment from "moment";
 import BootstrapVueIcons from "bootstrap-vue/dist/bootstrap-vue-icons.esm";
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faArrowRight, faArrowLeft, faFileAudio, faPlay, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+library.add(faArrowRight);
+library.add(faArrowLeft);
+library.add(faFileAudio);
+library.add(faPlay);
+library.add(faVolumeUp);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
 import "./config/autoImport.js";
 import router from "./router"
 

@@ -1,0 +1,46 @@
+$toolbox-color: #4c4c54;
+
+.toolbox {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1px;
+
+  &.toolbox--primary .toolbox__tool {
+    background-color: $toolbox-color;
+    color: #fff;
+  }
+
+  i {
+    pointer-events: none;
+  }
+}
+
+.toolbox__tool {
+  position: relative;
+  padding: 5px 8px;
+  box-shadow: 0 0px 4px black;
+  cursor: pointer;
+
+  &.toolbox__tool--active {
+    background-color: var(--purple) !important;
+
+    > .toolbox__subtools {
+      display: flex;
+    }
+  }
+
+  &:hover {
+    background-color: lighten($toolbox-color, 5);
+  }
+}
+
+.toolbox__subtools {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 100%;
+
+  & .toolbox__tool:hover {
+    background-color: lighten($toolbox-color, 5);
+  }
+}

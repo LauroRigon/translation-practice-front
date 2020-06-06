@@ -33,11 +33,8 @@ export const methods = {
       })
   },
 
-  updateTranslation(data) {
-    return TranslationService.updateTranslation(data)
-      .then(response => {
-        router.push({ name: 'translation-list'});
-      })
+  updateTranslation(id, data) {
+    return TranslationService.updateTranslation(id, data)
       .catch(error => {
         this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });
       })
