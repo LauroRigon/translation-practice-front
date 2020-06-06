@@ -1,7 +1,10 @@
 <template>
   <div class="translation-view">
-    <div class="toolbox-container">
-      <app-toolbox>
+    <draggable-free
+      @drag-end="handleToolboxDragEnded"
+      v-bind="initialToolboxTranslate"
+    >
+      <app-toolbox style="position: absolute">
         <toolbox-tool icon="file-audio">
           
           <toolbox-tool icon="play">
@@ -13,10 +16,9 @@
 
         </toolbox-tool>
       </app-toolbox>
-    </div>
+    </draggable-free>
 
-
-    <splitpanes horizontal="horizontal" style="height: 100vh;">
+      <splitpanes horizontal="horizontal" style="height: 100vh;">
       <pane >
         <div v-html="translation.originalText" class="w-100 h-100" style="padding: 20px; word-wrap: break-word;"></div>
       </pane>
@@ -43,10 +45,11 @@ import Redactor from "@/components/Redactor";
 import debounce from 'lodash/debounce'
 import AppToolbox from "@/components/toolbox/AppToolbox";
 import ToolboxTool from "@/components/toolbox/ToolboxTool";
+import DraggableFree from "@/components/DraggableFree";
 
 export default {
   name: "TranslationShow",
-  components: {ToolboxTool, AppToolbox, Redactor, Splitpanes, Pane},
+  components: {DraggableFree, ToolboxTool, AppToolbox, Redactor, Splitpanes, Pane},
   props: {
     translation: {
       type: Object,
@@ -67,8 +70,21 @@ export default {
     handleTranslationInvertedUpdate(Editor) {
       const text = Editor.getHTML();
       store.updateTranslation(this.translation._id, { translationInvertedText: text });
+    },
+    handleToolboxDragEnded({ context }) {
+      window.localStorage.setItem('toolbox-initials-cords', JSON.stringify({translateX: context.currentX, translateY: context.currentY}));
     }
-  }
+  },
+  computed: {
+    initialToolboxTranslate() {
+      let fromStorage = JSON.parse(window.localStorage.getItem('toolbox-initials-cords'));
+      if (fromStorage) {
+        return fromStorage;
+      } else {
+        return {translateX: '10px', translateY: '10px'};
+      }
+    }
+  },
 }
 </script>
 
@@ -78,11 +94,5 @@ export default {
 }
 .splitpanes__pane {
   overflow-y: auto;
-}
-
-.toolbox-container {
-  position: absolute;
-  top: 10px;
-  left: 10px;
 }
 </style>
