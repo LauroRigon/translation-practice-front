@@ -1,4 +1,53 @@
-.audioplayer {
+
+$player-bg: $purple;
+$player-border-color: $dark;
+$player-link-color: #fff;
+$player-progress-color: lighten($purple, 15);
+$player-seeker-color: lighten($purple, 5);
+$player-text-color: $player-link-color;
+
+.player {
+    background-color: $player-bg;
+    border: 1px solid $player-border-color;
+    border-radius: 5px;
+    box-shadow: 0 5px 8px rgba(0,0,0,0.15);
+    color: $player-text-color;
+    display: inline-block;
+    line-height: 1.5625;
+}
+
+.player-controls {
+    display: flex;
+
+    > div {
+        border-right: 1px solid $player-border-color;
+
+        &:last-child {
+            border-right: none;
+        }
+
+        a {
+            color: $player-link-color;
+            display: block;
+            line-height: 0;
+            padding: 1em;
+            text-decoration: none;
+        }
+    }
+}
+
+.player-progress {
+    background-color: $player-progress-color;
+    cursor: pointer;
+    min-width: 200px;
     height: 100%;
-    background-color: $toolbox-color;
+    position: relative;
+
+    .player-seeker {
+        background-color: $player-seeker-color;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        top: 0;
+    }
 }

@@ -2,8 +2,25 @@ $toolbox-color: #4c4c54;
 
 .toolbox {
   display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
   flex-direction: column;
   padding: 0 1px;
+  height: 100vh;
+  background-color: $toolbox-color;
+  transition: transform .2s ease;
+
+  .toolbox__toggler {
+    position: absolute;
+    left: 120%;
+    top: 0;
+    cursor: pointer;
+  }
+
+  &.toolbox--closed {
+    transform: translateX(-100%);
+  }
 
   &.toolbox--primary .toolbox__tool {
     background-color: $toolbox-color;
@@ -18,7 +35,7 @@ $toolbox-color: #4c4c54;
 .toolbox__tool {
   position: relative;
   padding: 5px 8px;
-  box-shadow: 0 0px 4px black;
+  box-shadow: 0 0 4px black;
   cursor: pointer;
 
   &.toolbox__tool--active {
@@ -39,6 +56,7 @@ $toolbox-color: #4c4c54;
   display: none;
   top: 0;
   left: 100%;
+  height: 100%;
 
   & .toolbox__tool:hover {
     background-color: lighten($toolbox-color, 5);

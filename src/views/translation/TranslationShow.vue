@@ -1,22 +1,12 @@
 <template>
   <div class="translation-view">
-    <draggable-free
-      @drag-end="handleToolboxDragEnded"
-      v-bind="initialToolboxTranslate"
-    >
-      <app-toolbox style="position: absolute">
+      <app-toolbox style="padding-top: 25px;">
         <toolbox-tool icon="file-audio">
-          
-          <toolbox-tool icon="play">
-
-          </toolbox-tool>
-          <toolbox-tool icon="volume-up">
-
-          </toolbox-tool>
-
+          <div class="player-wrapper">
+            <audio-player :file="'http://localhost:3000/' + translation.audioFile" />
+          </div>
         </toolbox-tool>
       </app-toolbox>
-    </draggable-free>
 
       <splitpanes horizontal="horizontal" style="height: 100vh;">
       <pane >
@@ -45,11 +35,11 @@ import Redactor from "@/components/Redactor";
 import debounce from 'lodash/debounce'
 import AppToolbox from "@/components/toolbox/AppToolbox";
 import ToolboxTool from "@/components/toolbox/ToolboxTool";
-import DraggableFree from "@/components/DraggableFree";
+import AudioPlayer from "@/components/AudioPlayer";
 
 export default {
   name: "TranslationShow",
-  components: {DraggableFree, ToolboxTool, AppToolbox, Redactor, Splitpanes, Pane},
+  components: {AudioPlayer, ToolboxTool, AppToolbox, Redactor, Splitpanes, Pane},
   props: {
     translation: {
       type: Object,
@@ -73,16 +63,6 @@ export default {
     },
     handleToolboxDragEnded({ context }) {
       window.localStorage.setItem('toolbox-initials-cords', JSON.stringify({translateX: context.currentX, translateY: context.currentY}));
-    }
-  },
-  computed: {
-    initialToolboxTranslate() {
-      let fromStorage = JSON.parse(window.localStorage.getItem('toolbox-initials-cords'));
-      if (fromStorage) {
-        return fromStorage;
-      } else {
-        return {translateX: '10px', translateY: '10px'};
-      }
     }
   },
 }
