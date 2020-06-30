@@ -1,3 +1,4 @@
+@import "variables";
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
@@ -11,21 +12,27 @@
 @import 'components/_translation-item';
 @import 'components/_toolbox';
 @import 'components/_audioplayer';
-
-:root {
-  --purple: #a970ff;
-  --dark: #1e2125;
-}
-
-$purple: #a970ff;
-$dark: #1e2125;
+@import 'components/_navbar';
 
 body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--dark);
+  background-color: $dark;
   font-family: "Helvetica", sans-serif !important;
-  color: var(--light);
+  color: $light;
+}
+
+.main-content {
+  margin-top: calc(#{$navbar-height} + 0.3rem);
+}
+
+.toast-dark {
+  background-color: $dark-light-3;
+  color: $light;
+}
+
+.translation-view > .splitpanes {
+  height: calc(100vh - (#{$navbar-height} + 0.3rem));
 }

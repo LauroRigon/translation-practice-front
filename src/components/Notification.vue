@@ -1,5 +1,5 @@
 <template>
-  <b-toast ref="bvToast" id="my-toast" :variant="notification.type" solid @hidden="handleHidden">
+  <b-toast ref="bvToast" id="my-toast" :variant="notification.type" solid @hidden="handleHidden" body-class="toast-dark">
     <template v-slot:toast-title>
       <div class="d-flex flex-grow-1 align-items-baseline">
         <strong class="mr-auto">{{ notification.title }}</strong>

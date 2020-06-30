@@ -47,10 +47,7 @@ export const methods = {
   },
 
   logout() {
-    AuthService.logout()
-      .then(response => {
-        this.logoutFromClient();
-      });
+    this.logoutFromClient();
   },
 
   logoutFromClient() {

@@ -1,14 +1,6 @@
 <template>
   <div class="translation-view">
-      <app-toolbox style="padding-top: 25px;">
-        <toolbox-tool icon="file-audio">
-          <div class="player-wrapper">
-            <audio-player :file="'http://localhost:3000/' + translation.audioFile" />
-          </div>
-        </toolbox-tool>
-      </app-toolbox>
-
-      <splitpanes horizontal="horizontal" style="height: 100vh;">
+      <splitpanes horizontal="horizontal">
       <pane >
         <div v-html="translation.originalText" class="w-100 h-100" style="padding: 20px; word-wrap: break-word;"></div>
       </pane>

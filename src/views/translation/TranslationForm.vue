@@ -3,7 +3,6 @@
     <BFormInput placeholder="Nome" v-model="form.name" block/>
     <BFormSelect placeholder="De" v-model="form.fromLang" :options="langOptions" class="mt-2"/>
     <BFormSelect placeholder="De" v-model="form.toLang" :options="langOptions" class="mt-2"/>
-    <BFormFile @change="handleChangeFile" placeholder="Choose a audio file..." drop-placeholder="Drop here..."/>
 
     <Redactor class="mt-2" @update="handleRedactorInput" :populate-with="translation && translation.originalText"/>
 
@@ -57,7 +56,6 @@ export default {
         fromLang: 0,
         toLang: 0,
         originalText: '',
-        audioFile: null,
       }
     }
   },
@@ -68,13 +66,13 @@ export default {
   },
   methods: {
     onSubmit() {
-      const formData = new FormData();
-      Object.keys(this.form).forEach((key) => formData.append(key, this.form[key]));
+      // const formData = new FormData();
+      // Object.keys(this.form).forEach((key) => formData.append(key, this.form[key]));
 
       if (!this.translation) {
-        store.createTranslation(formData);
+        store.createTranslation(this.form);
       } else {
-        store.updateTranslation(this.translation._id, formData)
+        store.updateTranslation(this.translation._id, this.form)
         .then(() => {
           router.push({ name: 'translation-list'});
         });

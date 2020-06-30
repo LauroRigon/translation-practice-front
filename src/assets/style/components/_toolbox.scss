@@ -39,7 +39,7 @@ $toolbox-color: #4c4c54;
   cursor: pointer;
 
   &.toolbox__tool--active {
-    background-color: var(--purple) !important;
+    background-color: $purple !important;
 
     > .toolbox__subtools {
       display: flex;

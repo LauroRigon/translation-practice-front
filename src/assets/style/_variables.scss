@@ -1,0 +1,17 @@
+$purple: #a970ff;
+$light: #e5e4e4;
+$dark: #0e0e10;
+$dark-light-1: lighten($dark, 2);
+$dark-light-2: lighten($dark, 4);
+$dark-light-3: lighten($dark, 8);
+
+$navbar-height: 3rem;
+
+$dropdown-bg: $dark-light-2;
+$dropdown-color: $light;
+$dropdown-link-color: $light;
+$dropdown-link-hover-bg: $dark-light-3;
+$dropdown-link-hover-color: $light;
+$dropdown-link-active-bg: $purple;
+
+$b-toast-color-level: 10;
