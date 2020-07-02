@@ -1,5 +1,6 @@
 import TranslationService from "@/services/TranslationService";
 import router from "@/router";
+import {errorToString} from "@/utils/error";
 
 export const state = {
   translations: [],
@@ -34,7 +35,20 @@ export const methods = {
   },
 
   updateTranslation(id, data) {
-    return TranslationService.updateTranslation(id, data)
+    return new Promise((resolve, reject) => {
+      TranslationService.updateTranslation(id, data)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          this.addNotification({ type: 'danger', title: 'Opa', message: errorToString(error.response && error.response.data) });
+          reject(error)
+        })
+    })
+  },
+
+  patchTranslation(id, data) {
+    return TranslationService.patchTranslation(id, data)
       .catch(error => {
         this.addNotification({ type: 'danger', title: 'Opa', message: error.response && error.response.data.message });
       })

@@ -14,6 +14,10 @@ export default {
   },
 
   updateTranslation(id, data) {
+    return apiClient.put(`translation/${id}`, data);
+  },
+
+  patchTranslation(id, data) {
     return apiClient.patch(`translation/${id}`, data);
   },
 

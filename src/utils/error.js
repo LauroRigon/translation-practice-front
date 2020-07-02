@@ -1,3 +1,5 @@
-export function errorsToString(errors) {
-  return Object.keys(errors).map(error => errors[error].join('<br>')).join('<br>');
+export function errorToString(error) {
+  return `
+    <p>${error.message}</p>
+  `
 }

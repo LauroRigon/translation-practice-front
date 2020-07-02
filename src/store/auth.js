@@ -1,6 +1,6 @@
 import AuthService from "@/services/AuthService";
 import router from "@/router";
-import {errorsToString} from "@/utils/error";
+import {errorToString} from "@/utils/error";
 
 const defaultUser = { user: {}, token: '', expires_in: '' };
 
@@ -23,7 +23,7 @@ export const methods = {
       })
       .catch(error => {
 
-        this.addNotification({ type: 'danger', title: error.response.data.message, message: errorsToString(error.response && error.response.data.errors) });
+        this.addNotification({ type: 'danger', title: error.response.data.message, message: errorToString(error.response && error.response.data) });
         this.state.loadings.register = false;
       });
   },
@@ -36,13 +36,13 @@ export const methods = {
       .then(response => {
         this.state.user = response.data;
         window.localStorage.setItem('user-auth', JSON.stringify(this.state.user));
-        this.addNotification({ type: 'success', title: 'Feito',  message: 'Divirta-se' });
         this.state.loadings.login = false;
         router.push({ name: 'translation-list' });
       })
       .catch(error => {
         this.state.loadings.login = false;
-        this.addNotification({ type: 'danger', title: 'Errado sai maluco', message: error.response.data.error })
+        this.addNotification({ type: 'danger', title: 'Errado sai maluco', message: errorToString(error.response && error.response.data) });
+        console.log(error)
       });
   },
 

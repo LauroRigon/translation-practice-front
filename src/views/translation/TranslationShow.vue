@@ -43,15 +43,16 @@ export default {
   },
   created() {
     this.handleTranslationUpdate = debounce(this.handleTranslationUpdate, 3000);
+    this.handleTranslationInvertedUpdate = debounce(this.handleTranslationInvertedUpdate, 3000);
   },
   methods: {
     handleTranslationUpdate(Editor) {
       const text = Editor.getHTML();
-      store.updateTranslation(this.translation._id, { translationText: text });
+      store.patchTranslation(this.translation._id, { translationText: text });
     },
     handleTranslationInvertedUpdate(Editor) {
       const text = Editor.getHTML();
-      store.updateTranslation(this.translation._id, { translationInvertedText: text });
+      store.patchTranslation(this.translation._id, { translationInvertedText: text });
     },
     handleToolboxDragEnded({ context }) {
       window.localStorage.setItem('toolbox-initials-cords', JSON.stringify({translateX: context.currentX, translateY: context.currentY}));

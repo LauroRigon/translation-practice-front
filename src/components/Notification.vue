@@ -5,7 +5,7 @@
         <strong class="mr-auto">{{ notification.title }}</strong>
       </div>
     </template>
-    {{ notification.message }}
+    <p v-html="notification.message"></p>
   </b-toast>
 </template>
 
