@@ -1,7 +1,6 @@
 .custom-select {
   background-color: transparent;
-  border: none;
-  border-bottom: 1px solid $primary;
+  border: 1px solid $primary;
   color: $light;
   z-index: 10;
 }
@@ -9,18 +8,4 @@
 .custom-select:focus {
   outline: none;
   border-bottom-width: 2px;
-}
-
-.form-control {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid $primary;
-  color: $light;
-  z-index: 10;
-}
-
-.form-control:focus {
-  background-color: black;
-  border: 2px $primary;
-  outline: 0;
 }
