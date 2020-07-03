@@ -18,7 +18,7 @@
       </div>
 
       <div class="translation-item__meta">
-        {{ translation.created | date }}
+        {{ translation.createdAt | date }}
       </div>
     </router-link>
   </div>

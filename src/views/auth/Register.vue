@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="simple-card login-form flex-grow-1" style="max-width: 450px;">
     <b-form @submit.prevent="handleSubmit">
       <b-form-group
         label="Name"
@@ -52,15 +52,15 @@
       </b-form-group>
 
       <b-form-group
-              label="Password"
-              label-for="password-confirm"
+        label="Password"
+        label-for="password-confirm"
       >
         <b-form-input
-                id="password-confirm"
-                v-model="privateState.credentials.confirm_password"
-                required
-                placeholder="Your password again"
-                @blur="$v.privateState.credentials.confirm_password.$touch()"
+          id="password-confirm"
+          v-model="privateState.credentials.confirm_password"
+          required
+          placeholder="Your password again"
+          @blur="$v.privateState.credentials.confirm_password.$touch()"
         />
         <template v-if="$v.privateState.credentials.confirm_password.$error">
           <p class="text-danger" v-if="!$v.privateState.credentials.confirm_password.required">Password required</p>
@@ -68,7 +68,22 @@
         </template>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" :disabled="$v.privateState.credentials.$anyError || sharedState.loadings.register">Register</b-button>
+      <b-button
+        type="submit"
+        variant="primary"
+        :disabled="$v.privateState.credentials.$anyError || sharedState.loadings.register"
+        block
+      >Sign Up</b-button>
+
+      <div class="d-flex flex-grow-1 align-items-center">
+        <div class="flex-grow-1 border-secondary border-bottom border-top-0 mr-1"></div>
+        <p class="mb-1">or</p>
+        <div class="flex-grow-1 border-secondary border-bottom border-top-0 ml-1"></div>
+      </div>
+
+      <div class="d-flex flex-grow-1 justify-content-center">
+        <router-link :to="{name: 'login'}">Already have an Account</router-link>
+      </div>
     </b-form>
   </div>
 </template>

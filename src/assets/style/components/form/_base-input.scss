@@ -1,8 +1,8 @@
 .form-input {
   background-color: transparent;
-  border: none;
-  border-bottom: 1px solid var(--purple);
-  color: #d3d3d3;
+
+  border: 1px solid $primary;
+  color: $light;
   z-index: 10;
 }
 
@@ -14,13 +14,13 @@
 .form-control {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--purple);
-  color: #d3d3d3;
+  border-bottom: 1px solid $primary;
+  color: $light;
   z-index: 10;
 }
 
 .form-control:focus {
   background-color: black;
-  border: 2px var(--purple);
+  border: 2px $primary;
   outline: 0;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="simple-card login-form flex-grow-1" style="max-width: 450px;">
     <b-form @submit.prevent="handleSubmit">
       <b-form-group
         label="Email"
@@ -23,11 +23,21 @@
           v-model="privateState.credentials.password"
           required
           placeholder="Your password"
+          type="password"
         />
       </b-form-group>
 
-      <b-button type="submit" variant="primary" :disabled="sharedState.loadings.login">Login</b-button>
+      <b-button type="submit" variant="primary" :disabled="sharedState.loadings.login" block>Login</b-button>
     </b-form>
+
+    <div class="d-flex flex-grow-1 align-items-center">
+      <div class="flex-grow-1 border-bottom border-top-0 mr-1" style="border-color: #383838 !important;"></div>
+      <p class="mb-1">or</p>
+      <div class="flex-grow-1 border-bottom border-top-0 ml-1" style="border-color: #383838 !important;"></div>
+    </div>
+    <div class="d-flex flex-grow-1 justify-content-center">
+      <router-link :to="{name: 'register'}">Sign Up</router-link>
+    </div>
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 .ProseMirror {
   padding: 3px;
   background-color: transparent;
-  border: 1px solid var(--purple);
+  border: 1px solid $primary;
   border-radius: 4px;
-  color: #d3d3d3;
+  color: $light;
   z-index: 10;
 }

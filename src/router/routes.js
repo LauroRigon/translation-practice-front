@@ -1,26 +1,36 @@
 import Login from "@/views/auth/Login";
 import Register from "@/views/auth/Register";
+import AuthRoot from "@/views/AuthRoot";
 import store from "@/store";
 
 const routes = [
   {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: {
-      public: true,
-    }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: {
-      public: true,
-    }
-  },
-  {
     path: '/',
+    name: 'auth-root',
+    component: AuthRoot,
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: Login,
+        meta: {
+          public: true,
+          onlyGuest:true
+        }
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: Register,
+        meta: {
+          public: true,
+          onlyGuest:true
+        }
+      },
+    ]
+  },
+  {
+    path: '/app',
     name: 'root',
     component: () => import(/* webpackChunkName: "root" */ "@/views/Root.vue"),
     redirect: { name: 'translation-list' },

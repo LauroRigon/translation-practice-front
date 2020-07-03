@@ -11,7 +11,7 @@
 
 .translation-item:hover, .translation-item:focus {
   cursor: pointer;
-  box-shadow: -5px 5px #a970ff;
+  box-shadow: -5px 5px $primary;
   transform: translate(5px, -5px);
 }
 
@@ -36,6 +36,6 @@
   height: 20px;
 }
 .translation-item__icon:hover {
-  color: #a970ff;
+  color: $primary;
   transform: scale(1.2);
 }

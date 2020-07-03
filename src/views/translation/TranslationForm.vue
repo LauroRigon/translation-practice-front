@@ -1,25 +1,82 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <BFormInput placeholder="Nome" v-model="form.name" block/>
-    <BFormSelect placeholder="De" v-model="form.fromLang" :options="langOptions" class="mt-2"/>
-    <BFormSelect placeholder="De" v-model="form.toLang" :options="langOptions" class="mt-2"/>
+  <div class="d-flex justify-content-center">
+    <div class="simple-card flex-grow-1" style="max-width: 800px;">
+      <form @submit.prevent="onSubmit">
+        <b-form-group
+          label="Name"
+          label-for="name"
+        >
+          <b-form-input
+            placeholder="Name"
+            v-model="form.name"
+            block
+            @blur="$v.form.name.$touch()"
+          />
+          <template v-if="$v.form.name.$error">
+            <p class="text-danger" v-if="!$v.form.name.required">Name is required</p>
+          </template>
+        </b-form-group>
 
-    <Redactor class="mt-2" @update="handleRedactorInput" :populate-with="translation && translation.originalText"/>
+        <b-form-group
+          label="Translating from"
+          label-for="fromLang"
+        >
+          <b-form-select
+            placeholder="De"
+            v-model="form.fromLang"
+            :options="langOptions"
+            class="mt-2"
+            @blur="$v.form.fromLang.$touch()"
+          />
+          <template v-if="$v.form.fromLang.$error">
+            <p class="text-danger" v-if="!$v.form.fromLang.required">Required</p>
+          </template>
+        </b-form-group>
+        <b-form-group
+          label="Translating to"
+          label-for="fromLang"
+        >
+          <b-form-select placeholder="De" v-model="form.toLang" :options="langOptions" class="mt-2"/>
+        </b-form-group>
 
-    <BOverlay :show="loading"
-              rounded
-              spinner-small
-    >
-      <BButton style="background-color: #a970ff;" block type="submit" class="mt-2">
-        {{ btnLabel }}
-      </BButton>
-    </BOverlay>
-  </form>
+        <b-form-group
+          label="Original text"
+          label-for="fromLang"
+        >
+          <redactor
+            class="mt-2" @update="handleRedactorInput"
+            :populate-with="translation && translation.originalText"
+            @blur="$v.form.originalText.$touch()"
+          />
+          <template v-if="$v.form.originalText.$error">
+            <p v-if="!$v.form.originalText.required">Original Text is required</p>
+          </template>
+        </b-form-group>
+
+        <b-overlay
+          :show="loading"
+          rounded
+          spinner-small
+        >
+          <b-button
+            variant="primary"
+            block
+            type="submit"
+            class="mt-2"
+            :disabled="$v.form.$anyError"
+          >
+            {{ btnLabel }}
+          </b-button>
+        </b-overlay>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>
-import {BButton, BFormInput, BFormSelect, BFormFile} from "bootstrap-vue";
+import {BFormGroup, BButton, BFormInput, BFormSelect, BFormFile} from "bootstrap-vue";
 import {BOverlay} from "bootstrap-vue";
+import { required } from 'vuelidate/lib/validators'
 
 import BaseSelect from "@/components/common/BaseSelect";
 import Redactor from "@/components/Redactor";
@@ -30,7 +87,15 @@ import router from "@/router";
 
 export default {
   name: "TranslationForm",
-  components: {Redactor, BaseSelect, BButton, BOverlay, BFormInput, BFormSelect, BFormFile},
+  components: {Redactor, BaseSelect, BButton, BOverlay, BFormInput, BFormSelect, BFormFile, BFormGroup},
+  validations: {
+    form: {
+      name: { required },
+      fromLang: { required },
+      toLang: { required },
+      originalText: { required },
+    }
+  },
   props: {
     translation: {
       type: Object,
@@ -66,6 +131,9 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.$v.form.$touch();
+      if (this.$v.$anyError) return;
+
       if (!this.translation) {
         store.createTranslation(this.form);
       } else {

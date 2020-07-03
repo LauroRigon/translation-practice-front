@@ -19,8 +19,10 @@ router.beforeEach((routeTo, routeFrom, next) => {
     } else {
       next({ name: 'login' })
     }
+  } else if (routeTo.meta.onlyGuest && !!store.state.user.token) {
+    next({ name: 'translation-list' });
   } else {
-    next()
+    next();
   }
 });
 

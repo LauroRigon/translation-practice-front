@@ -13,6 +13,7 @@
 @import 'components/_toolbox';
 @import 'components/_audioplayer';
 @import 'components/_navbar';
+@import 'components/_simple-card';
 
 body {
   width: 100%;
@@ -35,4 +36,8 @@ body {
 
 .translation-view > .splitpanes {
   height: calc(100vh - (#{$navbar-height} + 0.3rem));
+}
+
+.form-group > label {
+  font-weight: bold;
 }

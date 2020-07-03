@@ -17,12 +17,11 @@ export const methods = {
     return AuthService.register(credentials)
       .then(response => {
         this.addNotification({ type: 'success', title: 'Feito',  message: 'Cadastrado' });
+        this.persistUserAuth(response.data)
         this.state.loadings.register = false;
-
-        router.push({ name: 'login' });
+        router.push({ name: 'translation-list' });
       })
       .catch(error => {
-
         this.addNotification({ type: 'danger', title: error.response.data.message, message: errorToString(error.response && error.response.data) });
         this.state.loadings.register = false;
       });
@@ -34,8 +33,8 @@ export const methods = {
     this.state.loadings.login = true;
     return AuthService.login(credentials)
       .then(response => {
-        this.state.user = response.data;
-        window.localStorage.setItem('user-auth', JSON.stringify(this.state.user));
+        this.persistUserAuth(response.data);
+
         this.state.loadings.login = false;
         router.push({ name: 'translation-list' });
       })
@@ -54,5 +53,10 @@ export const methods = {
     window.localStorage.removeItem('user-auth');
     this.state.user = defaultUser;
     router.push({ name: 'login' });
+  },
+
+  persistUserAuth(userAuthData) {
+    this.state.user = userAuthData;
+    window.localStorage.setItem('user-auth', JSON.stringify(userAuthData));
   }
 };
