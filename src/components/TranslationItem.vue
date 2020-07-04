@@ -44,12 +44,5 @@ export default {
       LANG_LIST,
     }
   },
-  methods: {
-    handleRemove() {
-      if (!window.confirm('Certeza?')) return;
-
-      store.removeTranslation(this.translation._id);
-    },
-  },
 }
 </script>

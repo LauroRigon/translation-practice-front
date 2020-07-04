@@ -1,6 +1,14 @@
 <template>
   <div class="d-flex justify-content-center">
-    <div class="simple-card flex-grow-1" style="max-width: 800px;">
+    <div class="simple-card flex-grow-1 position-relative" style="max-width: 800px;">
+      <b-button
+        v-if="translation && translation._id"
+        @click="handleRemove"
+        class="position-absolute bg-danger border-0"
+        style="top:0; right: 0;"
+      >
+        <b-icon icon="trash"></b-icon>
+      </b-button>
       <form @submit.prevent="onSubmit">
         <b-form-group
           label="Name"
@@ -135,9 +143,9 @@ export default {
       if (this.$v.$anyError) return;
 
       if (!this.translation) {
-        store.createTranslation(this.form);
+        store.dispatch('translation/createTranslation', this.form);
       } else {
-        store.updateTranslation(this.translation._id, this.form)
+        store.dispatch('translation/updateTranslation', { id: this.translation._id, translation: this.form })
         .then(() => {
           router.push({ name: 'translation-list'});
         });
@@ -146,9 +154,14 @@ export default {
     handleRedactorInput(Editor) {
       this.$set(this.form, 'originalText', Editor.getHTML());
     },
+    handleRemove() {
+      if (!window.confirm('Are you sure?')) return;
+
+      store.dispatch('translation/removeTranslation', this.translation._id);
+    },
     handleChangeFile(e) {
       this.form.audioFile = e.target.files[0];
-    }
+    },
   },
 }
 </script>

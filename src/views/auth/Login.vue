@@ -8,7 +8,7 @@
         <b-form-input
           id="email"
           type="email"
-          v-model="privateState.credentials.email"
+          v-model="credentials.email"
           required
           placeholder="Your email"
         />
@@ -20,14 +20,14 @@
       >
         <b-form-input
           id="password"
-          v-model="privateState.credentials.password"
+          v-model="credentials.password"
           required
           placeholder="Your password"
           type="password"
         />
       </b-form-group>
 
-      <b-button type="submit" variant="primary" :disabled="sharedState.loadings.login" block>Login</b-button>
+      <b-button type="submit" variant="primary" :disabled="false" block>Login</b-button>
     </b-form>
 
     <div class="d-flex flex-grow-1 align-items-center">
@@ -44,8 +44,6 @@
 <script>
 import { BForm, BFormGroup, BFormInput, BButton } from 'bootstrap-vue'
 
-import store from "@/store";
-
 export default {
   name: "Login",
 
@@ -53,19 +51,16 @@ export default {
 
   data() {
     return {
-      privateState: {
-        credentials: {
-          email: '',
-          password: '',
-        }
-      },
-      sharedState: store.state,
+      credentials: {
+        email: '',
+        password: '',
+      }
     }
   },
 
   methods: {
     handleSubmit() {
-      store.login(this.privateState.credentials);
+      this.$store.dispatch('auth/login', this.credentials);
     }
   },
 }

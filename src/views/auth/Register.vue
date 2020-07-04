@@ -7,13 +7,13 @@
       >
         <b-form-input
           id="name"
-          v-model="privateState.credentials.name"
+          v-model="credentials.name"
           required
           placeholder="Your name"
-          @blur="$v.privateState.credentials.name.$touch()"
+          @blur="$v.credentials.name.$touch()"
         />
-        <template v-if="$v.privateState.credentials.name.$error">
-          <p class="text-danger" v-if="!$v.privateState.credentials.name.required">Name required</p>
+        <template v-if="$v.credentials.name.$error">
+          <p class="text-danger" v-if="!$v.credentials.name.required">Name required</p>
         </template>
       </b-form-group>
 
@@ -23,14 +23,14 @@
       >
         <b-form-input
                 id="email"
-                v-model="privateState.credentials.email"
+                v-model="credentials.email"
                 required
                 placeholder="Your email"
-                @blur="$v.privateState.credentials.email.$touch()"
+                @blur="$v.credentials.email.$touch()"
         />
-        <template v-if="$v.privateState.credentials.email.$error">
-          <p class="text-danger" v-if="!$v.privateState.credentials.email.required">Email required</p>
-          <p class="text-danger" v-if="!$v.privateState.credentials.email.email">Type a valid email</p>
+        <template v-if="$v.credentials.email.$error">
+          <p class="text-danger" v-if="!$v.credentials.email.required">Email required</p>
+          <p class="text-danger" v-if="!$v.credentials.email.email">Type a valid email</p>
         </template>
       </b-form-group>
 
@@ -40,14 +40,14 @@
       >
         <b-form-input
           id="password"
-          v-model="privateState.credentials.password"
+          v-model="credentials.password"
           required
           placeholder="Your password"
-          @blur="$v.privateState.credentials.password.$touch()"
+          @blur="$v.credentials.password.$touch()"
         />
-        <template v-if="$v.privateState.credentials.password.$error">
-          <p class="text-danger" v-if="!$v.privateState.credentials.password.required">Password required</p>
-          <p class="text-danger" v-if="!$v.privateState.credentials.password.minLength">Type at least 6 chars</p>
+        <template v-if="$v.credentials.password.$error">
+          <p class="text-danger" v-if="!$v.credentials.password.required">Password required</p>
+          <p class="text-danger" v-if="!$v.credentials.password.minLength">Type at least 6 chars</p>
         </template>
       </b-form-group>
 
@@ -57,21 +57,21 @@
       >
         <b-form-input
           id="password-confirm"
-          v-model="privateState.credentials.confirm_password"
+          v-model="credentials.confirm_password"
           required
           placeholder="Your password again"
-          @blur="$v.privateState.credentials.confirm_password.$touch()"
+          @blur="$v.credentials.confirm_password.$touch()"
         />
-        <template v-if="$v.privateState.credentials.confirm_password.$error">
-          <p class="text-danger" v-if="!$v.privateState.credentials.confirm_password.required">Password required</p>
-          <p class="text-danger" v-if="!$v.privateState.credentials.confirm_password.sameAsPassword">Passwords does not match</p>
+        <template v-if="$v.credentials.confirm_password.$error">
+          <p class="text-danger" v-if="!$v.credentials.confirm_password.required">Password required</p>
+          <p class="text-danger" v-if="!$v.credentials.confirm_password.sameAsPassword">Passwords does not match</p>
         </template>
       </b-form-group>
 
       <b-button
         type="submit"
         variant="primary"
-        :disabled="$v.privateState.credentials.$anyError || sharedState.loadings.register"
+        :disabled="$v.credentials.$anyError"
         block
       >Sign Up</b-button>
 
@@ -82,7 +82,7 @@
       </div>
 
       <div class="d-flex flex-grow-1 justify-content-center">
-        <router-link :to="{name: 'login'}">Already have an Account</router-link>
+        <router-link :to="{ name: 'login' }">Already have an Account</router-link>
       </div>
     </b-form>
   </div>
@@ -100,33 +100,28 @@ export default {
   components: { BForm, BFormGroup, BFormInput, BButton },
 
   validations: {
-    privateState: {
-      credentials: {
-        name: { required },
-        email: { required, email },
-        password: { required, minLength: minLength(6) },
-        confirm_password: { required, sameAsPassword: sameAs('password') },
-      }
+    credentials: {
+      name: { required },
+      email: { required, email },
+      password: { required, minLength: minLength(6) },
+      confirm_password: { required, sameAsPassword: sameAs('password') },
     }
   },
 
   data() {
     return {
-      privateState: {
-        credentials: {
-          name: '',
-          email: '',
-          password: '',
-          confirm_password: ''
-        }
-      },
-      sharedState: store.state,
+      credentials: {
+        name: '',
+        email: '',
+        password: '',
+        confirm_password: ''
+      }
     }
   },
 
   methods: {
     handleSubmit() {
-      store.register(this.privateState.credentials)
+      store.dispatch('auth/register', this.credentials);
     }
   },
 }

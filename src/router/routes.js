@@ -52,13 +52,13 @@ const routes = [
         component: () => import(/* webpackChunkName: "translation-form" */ "@/views/translation/TranslationForm.vue"),
         beforeEnter: (routeTo, routeFrom, next) => {
           let translationId = routeTo.params.id;
-          store.fetchTranslation(translationId)
+          store.dispatch('translation/fetchTranslation', translationId)
             .then(response => {
               routeTo.params.translation = response.data;
               next();
             })
             .catch(() => {
-              store.addNotification({ type: 'danger', title: 'Opss', message: 'Deu ruim ao recuperar a Translation' });
+              store.commit('addNotification', { notification: { type: 'danger', title: 'Opss', message: 'Something went wrong finding translation' }});
             });
         }
       },
@@ -69,13 +69,13 @@ const routes = [
         component: () => import(/* webpackChunkName: "translation-show" */ "@/views/translation/TranslationShow.vue"),
         beforeEnter: (routeTo, routeFrom, next) => {
           let translationId = routeTo.params.id;
-          store.fetchTranslation(translationId)
+          store.dispatch('translation/fetchTranslation', translationId)
             .then(response => {
               routeTo.params.translation = response.data;
               next();
             })
             .catch(() => {
-              store.addNotification({ type: 'danger', title: 'Opss', message: 'Deu ruim ao recuperar a Translation' });
+              store.commit('addNotification',{ notification: { type: 'danger', title: 'Opss', message: 'Something went wrong finding translation' }});
             });
         }
       },

@@ -5,7 +5,7 @@
     </BaseHeader>
 
     <div class="d-flex align-items-baseline flex-wrap">
-      <template v-for="translation in sharedState.translations">
+      <template v-for="translation in translations">
         <TranslationItem :translation="translation" :key="translation._id"/>
       </template>
 
@@ -23,31 +23,19 @@ import store from "@/store";
 import BaseHeader from "@/components/common/BaseHeader";
 import TranslationItem from "@/components/TranslationItem";
 
-function fetchTranslations(next) {
-  store.fetchTranslations()
-  .then(() => {
-    next();
-  });
-}
-
 export default {
   name: "TranslationList",
   components: {TranslationItem, BaseHeader},
-  data() {
-    return {
-      sharedState: store.state,
-      privateState: {}
-    }
-  },
-
   beforeRouteEnter(routeTo, routeFrom, next) {
-    fetchTranslations(next);
+    store.dispatch('translation/fetchTranslations')
+      .then(() => {
+        next();
+      });
   },
-
-  methods: {
-    handleSubmit(data) {
-      store.createTranslation(data)
-    },
+  computed: {
+    translations() {
+      return this.$store.getters['translation/translations'];
+    }
   },
 }
 </script>

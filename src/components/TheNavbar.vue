@@ -27,7 +27,7 @@ export default {
   components: {BDropdown, BDropdownItem, BAvatar},
   methods: {
     handleLogout() {
-      store.logout()
+      store.dispatch('auth/logoutFromClient');
     }
   }
 }

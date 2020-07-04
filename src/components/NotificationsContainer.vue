@@ -1,7 +1,7 @@
 <template>
   <div>
     <Notification
-      v-for="notification in sharedState.notifications"
+      v-for="notification in notifications"
       :key="notification.id"
       :notification="notification"
     />
@@ -9,15 +9,14 @@
 </template>
 
 <script>
-import store from "@/store";
 import Notification from "@/components/Notification";
 
 export default {
   name: "NotificationsContainer",
   components: {Notification},
-  data() {
-    return {
-      sharedState: store.state
+  computed: {
+    notifications() {
+      return this.$store.state.notifications;
     }
   },
 }

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import store from "../store";
+import store from "@/store";
 import { BToast } from 'bootstrap-vue'
 
 export default {
@@ -29,7 +29,7 @@ export default {
 
   methods: {
     handleHidden() {
-      store.removeNotification(this.notification.id)
+      store.commit('removeNotification', this.notification.id);
     }
   },
 }

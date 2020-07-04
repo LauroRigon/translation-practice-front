@@ -12,16 +12,17 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(config => {
-  if (store.state.user.token) {
-    config.headers['Authorization'] = 'Bearer ' + store.state.user.token;
+  const user = store.getters["auth/user"];
+  if (user.token) {
+    config.headers['Authorization'] = 'Bearer ' + user.token;
   }
 
   return config;
 });
 
 apiClient.interceptors.response.use(response => response, error => {
-  if (error.response.status === 401 && store.state.user.token) {
-    store.logoutFromClient();
+  if (error.response.status === 401 && user.token) {
+    store.dispatch('auth/logoutFromClient');
   }
 
   return Promise.reject(error);

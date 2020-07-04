@@ -1,31 +1,42 @@
-import { state as authState, methods as authMethods } from "@/store/auth";
-import { state as translationState, methods as translationMethods } from "@/store/translation";
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-const store = {
-  debug: true,
+import auth from './modules/auth';
+import translation from './modules/translation';
+
+Vue.use(Vuex);
+
+const persistUserSession = store => {
+  const userSession = window.localStorage.getItem('user-session');
+  if (userSession) {
+    store.commit('auth/setUser', JSON.parse(userSession));
+  }
+
+  store.subscribe((mutation) => {
+    if (mutation.type === 'auth/setUser') {
+      window.localStorage.setItem('user-session', JSON.stringify(mutation.payload));
+    }
+  })
+}
+
+export default new Vuex.Store({
+  plugins: [persistUserSession],
   state: {
-    notifications: [],
-    loadings: {
-      login: false,
+    notifications: []
+  },
+
+  mutations: {
+    addNotification(state, { notification }) {
+      let randomId = Math.floor(Math.random() * 1000);
+      state.notifications.push({ id: randomId, ...notification });
     },
-    ...authState,
-    ...translationState,
-  },
-  ...authMethods,
-  ...translationMethods,
-
-  addNotification(notification) {
-    if (this.debug) console.log('addNotification triggered with', notification);
-
-    let randomId = Math.floor(Math.random() * 1000);
-    this.state.notifications.push({ id: randomId, ...notification });
+    removeNotification(state, { id }) {
+     state.notifications = this.state.notifications.filter(notification => notification.id !== id);
+    }
   },
 
-  removeNotification(id) {
-    if (this.debug) console.log('clearMessageAction triggered', id);
-
-    this.state.notifications = this.state.notifications.filter(notification => notification.id !== id)
-  },
-};
-
-export default store;
+  modules: {
+    auth,
+    translation,
+  }
+})

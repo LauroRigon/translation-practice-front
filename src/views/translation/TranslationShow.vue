@@ -48,11 +48,11 @@ export default {
   methods: {
     handleTranslationUpdate(Editor) {
       const text = Editor.getHTML();
-      store.patchTranslation(this.translation._id, { translationText: text });
+      store.dispatch('translation/patchTranslation', {id: this.translation._id, translation: { translationText: text }});
     },
     handleTranslationInvertedUpdate(Editor) {
       const text = Editor.getHTML();
-      store.patchTranslation(this.translation._id, { translationInvertedText: text });
+      store.dispatch('translation/patchTranslation', {id: this.translation._id, translation: {translationInvertedText: text }});
     },
     handleToolboxDragEnded({ context }) {
       window.localStorage.setItem('toolbox-initials-cords', JSON.stringify({translateX: context.currentX, translateY: context.currentY}));
