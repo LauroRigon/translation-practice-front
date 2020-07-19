@@ -36,7 +36,7 @@ export default {
           router.push({ name: 'translation-list' });
         })
         .catch(error => {
-          commit('addNotification', {notification: { type: 'danger', title: error.response.data.message, message: errorToString(error.response && error.response.data) }}, { root: true })
+          commit('addNotification', {notification: { type: 'danger', title: error.response && error.response.data.message, message: errorToString(error.response && error.response.data) }}, { root: true })
         });
     },
 

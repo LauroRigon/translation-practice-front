@@ -7,7 +7,7 @@
         class="position-absolute bg-danger border-0"
         style="top:0; right: 0;"
       >
-        <b-icon icon="trash"></b-icon>
+        <font-awesome-icon icon="trash"/>
       </b-button>
       <form @submit.prevent="onSubmit">
         <b-form-group

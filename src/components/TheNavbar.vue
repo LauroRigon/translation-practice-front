@@ -9,7 +9,7 @@
             </template>
 
             <b-dropdown-item @click="handleLogout">
-              <b-icon icon="power"></b-icon> Sair
+              <font-awesome-icon icon="power-off"/> Sair
             </b-dropdown-item>
           </b-dropdown>
         </div>

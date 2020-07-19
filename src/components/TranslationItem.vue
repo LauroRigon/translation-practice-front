@@ -1,7 +1,7 @@
 <template>
   <div class="translation-item">
     <router-link :to="{ name: 'translation-edit', params: {id: translation._id} }" tag="span">
-      <BIcon class="translation-item__icon" icon="pencil-square" scale="1"/>
+      <font-awesome-icon icon="edit" class="translation-item__icon"/>
     </router-link>
     <router-link tag="div" :to="{ name: 'translation-show', params: { id: translation._id }}">
       <div class="translation-item__name">

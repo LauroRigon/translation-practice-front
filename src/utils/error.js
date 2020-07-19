@@ -1,5 +1,11 @@
 export function errorToString(error) {
-  return `
+  if (error) {
+    return `
     <p>${error.message}</p>
+  `
+  }
+
+  return `
+    <p>There was a problem. Try again.</p>
   `
 }
